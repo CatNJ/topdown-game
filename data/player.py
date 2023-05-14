@@ -6,6 +6,8 @@ from data.gui import Label
 pygame.init()
 
 class Player(Label):
+    health = 100
+
     def move(self, key, step):
         if key[pygame.K_w]:
             self.rect.y -= step
