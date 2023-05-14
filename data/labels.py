@@ -1,3 +1,5 @@
+# щось
+
 from data.gui import Label
 
 main_text = Label(25, 25, 150, 75, (255, 255, 255))
