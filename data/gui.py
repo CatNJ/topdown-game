@@ -24,7 +24,7 @@ class Area():
         self.color = new_color
 
     # малювання прямокутника на екрані
-    def fill(self):
+    def draw(self):
         pygame.draw.rect(self.window, self.color, self.rect)
 
     # точка пересічення
@@ -50,10 +50,8 @@ class Label(Area):
 
     # малюєм прямокунтник з текстом
     def draw(self, shift_x=0, shift_y=0):
-        self.fill()
-
-        if self.text != '':
-            self.window.blit(self.text, (self.rect.x + shift_x, self.rect.y + shift_y))
+        self.draw()
+        self.window.blit(self.text, (self.rect.x + shift_x, self.rect.y + shift_y))
 
 
 class Button(Label):
