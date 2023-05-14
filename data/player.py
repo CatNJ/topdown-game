@@ -1,11 +1,11 @@
 import pygame
 
 from data.game_window import root
-from data.gui import Label
+from data.gui import Area
 
 pygame.init()
 
-class Player(Label):
+class Player(Area):
     health = 100
 
     def move(self, key, step):
