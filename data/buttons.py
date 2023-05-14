@@ -1,3 +1,5 @@
+# кнопки
+
 from data.gui import Button
 from data.settings import *
 
