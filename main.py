@@ -33,7 +33,7 @@ menu = 0
 while True:
     #bg.blit(bg, (100, 100))
 
-    # заливайм екран чорним кольром
+    # заливаєм екран чорним кольром
     root.fill((0, 0, 0))
 
     for event in pygame.event.get():
