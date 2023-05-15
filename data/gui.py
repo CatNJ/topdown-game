@@ -56,6 +56,6 @@ class Label(Area):
 
 class Button(Label):
     def is_clicked(self):
-        # якщо мишка наведина на кнопку і нажата ліваклавіша миші
+        # якщо мишка наведина на кнопку і нажата ліва клавіша миші
         if self.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
             return True
