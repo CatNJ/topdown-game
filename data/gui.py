@@ -52,7 +52,7 @@ class Picture(Area):
         self.image = pygame.image.load(filename)
 
     def draw(self):
-        wm.blit(self.image, (self.rect.x, self.rect.y))
+        root.blit(self.image, (self.rect.x, self.rect.y))
 
 
 class Button(Label):
