@@ -9,6 +9,7 @@ from data.settings import *
 from data.labels import *
 from data.buttons import *
 from data.player import *
+from data.enemy import Enemy
 
 pygame.init()
 
@@ -29,7 +30,7 @@ enemys = []
 enemys_count = 75
 
 for i in range(enemys_count):
-    enemy = Player(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0))
+    enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3))
     enemys.append(enemy)
 
 while True:
@@ -84,17 +85,18 @@ while True:
             menu = 3
 
     elif menu == 1:
+        key = pygame.key.get_pressed()
+        player.move(key, 6)
+        player.fill()
+
         for enemy in enemys:
+            enemy.move()
             enemy.fill()
             for bullet in player_bullets:
                 if enemy.collidepoint((bullet.x, bullet.y)):
                     if enemy in enemys:
                         player_bullets.remove(bullet)
                         enemys.remove(enemy)
-
-        key = pygame.key.get_pressed()
-        player.move(key, 5)
-        player.fill()
 
         if show_fps:
             fps_show.set_text("FPS: " + str(clock.get_fps())[:4], 20, (255, 255, 255))

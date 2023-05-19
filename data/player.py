@@ -9,8 +9,6 @@ from data.gui import Area
 pygame.init()
 
 class Player(Area):
-    health = 100
-
     def move(self, key, step):
         if key[pygame.K_w]:
             self.rect.y -= step
