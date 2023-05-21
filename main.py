@@ -19,17 +19,19 @@ clock = pygame.time.Clock()
 FPS = 60
 
 player = Player(W/2, H/2, 50, 50, (0, 255, 0))
+game_map = Picture('map.png')
 
 fps_game = 0
 menu = 0
 
 player_bullets = []
 enemys = []
+enemys_gen = True
 enemys_count = 75
 
-for i in range(enemys_count):
-    enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3))
-    enemys.append(enemy)
+# for i in range(enemys_count):
+#     enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3))
+#     enemys.append(enemy)
 
 while True:
     root.fill((0, 0, 0))
@@ -55,6 +57,8 @@ while True:
             menu = 0
 
     if menu == 0:
+        enemys_gen = True
+        enemys = []
         player_bullets = []
 
         player.rect.x = W/2
@@ -81,6 +85,13 @@ while True:
             menu = 3
 
     elif menu == 1:
+        if len(enemys) == 0 and enemys_gen:
+            enemys_gen = False
+            for i in range(enemys_count):
+                enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3))
+                enemys.append(enemy)
+
+        game_map.draw()
         key = pygame.key.get_pressed()
         player.move(key, 6)
         player.fill()
