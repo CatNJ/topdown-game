@@ -18,8 +18,6 @@ root.fill((0, 0, 0))
 clock = pygame.time.Clock()
 FPS = 60
 
-bg = pygame.image.load('data/maps/forest.png').convert_alpha()
-
 player = Player(W/2, H/2, 50, 50, (0, 255, 0))
 
 fps_game = 0
@@ -34,8 +32,6 @@ for i in range(enemys_count):
     enemys.append(enemy)
 
 while True:
-    #bg.blit(bg, (100, 100))
-
     root.fill((0, 0, 0))
 
     for event in pygame.event.get():
@@ -114,6 +110,7 @@ while True:
             if bullet.x > W or bullet.x < 0 or bullet.y > H or bullet.y < 0:
                 player_bullets.remove(bullet)
 
+
     elif menu == 3:
         show_fps_button.draw(shift_x=5, shift_y=10)
         show_fps_button.hover_color((255, 255, 0))
@@ -124,6 +121,5 @@ while True:
 
 
 
-    #bg.blit(bg, (0, 0))
     clock.tick(FPS)
     pygame.display.update()
