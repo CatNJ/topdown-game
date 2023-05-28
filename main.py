@@ -18,7 +18,7 @@ root.fill((0, 0, 0))
 clock = pygame.time.Clock()
 FPS = 60
 
-player = Player(W/2, H/2, 50, 50, (0, 255, 0))
+player = Player(x=W/2, y=H/2, width=50, height=50, filename='player.png')
 game_map = Picture('map.png')
 
 fps_game = 0
@@ -27,7 +27,11 @@ menu = 0
 player_bullets = []
 enemys = []
 enemys_gen = True
-enemys_count = 75
+enemys_count = 35
+
+bullet_count = 150
+bullet_delay = 0.3
+bullet_time = time.time()
 
 # for i in range(enemys_count):
 #     enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3))
@@ -60,6 +64,7 @@ while True:
         enemys_gen = True
         enemys = []
         player_bullets = []
+        bullet_count = 150
 
         player.rect.x = W/2
         player.rect.y = H/2
@@ -88,30 +93,34 @@ while True:
         if len(enemys) == 0 and enemys_gen:
             enemys_gen = False
             for i in range(enemys_count):
-                enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3))
+                enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3), 'russian_zombie.jpg')
                 enemys.append(enemy)
 
         game_map.draw()
         key = pygame.key.get_pressed()
         player.move(key, 6)
-        player.fill()
+        player.draw()
 
         for enemy in enemys:
             enemy.move()
-            enemy.fill()
+            enemy.draw()
             for bullet in player_bullets:
                 if enemy.collidepoint((bullet.x, bullet.y)):
                     if enemy in enemys:
                         player_bullets.remove(bullet)
                         enemys.remove(enemy)
 
+        bullet_count_lable.set_text(f'bullet: {bullet_count}', 25, (255,255,255))
+        bullet_count_lable.draw()
+
         if show_fps:
             fps_show.set_text("FPS: " + str(clock.get_fps())[:4], 20, (255, 255, 255))
             fps_show.draw()
 
-        if pygame.mouse.get_pressed()[0]:
+        if pygame.mouse.get_pressed()[0] and bullet_count > 0:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             player_bullets.append(PlayerBullets(player.rect.x+25, player.rect.y+25, mouse_x, mouse_y))
+            bullet_count -= 1
 
         if key[pygame.K_r]:
             print(len(player_bullets))

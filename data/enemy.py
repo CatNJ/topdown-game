@@ -2,7 +2,7 @@ import time
 
 import pygame
 
-from data.gui import Area
+from data.gui import Picture
 from data.game_window import *
 
 
@@ -22,11 +22,16 @@ pygame.init()
 #             self.rect.x += (dx / distance) * self.speed
 #             self.rect.y += (dy / distance) * self.speed
 
-class Enemy(Area):
-    def __init__(self, x=0, y=0, width=10, height=10, color=(255, 0, 0), player=None, speed=1, window=root):
-        super().__init__(x, y, width, height, color, window)
+class Enemy(Picture):
+    def __init__(self, x=0, y=0, width=10, height=10, color=(255, 0, 0), player=None, speed=1, filename=None, window=root):
+        super().__init__(x=x, y=y, width=width, height=height, filename=filename)
         self.player = player
         self.speed = speed
+        self.color = color
+        self.color_bak = color
+
+    def load_image(self, image_file):
+        self.image = image_file
 
     def move(self):
         if self.player is not None:

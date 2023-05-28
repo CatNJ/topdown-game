@@ -4,11 +4,13 @@ import math
 import pygame
 
 from data.game_window import root
-from data.gui import Area
+from data.gui import Picture
 
 pygame.init()
 
-class Player(Area):
+class Player(Picture):
+    rotate = False
+
     def move(self, key, step):
         if key[pygame.K_w]:
             self.rect.y -= step
@@ -18,10 +20,15 @@ class Player(Area):
 
         if key[pygame.K_a]:
             self.rect.x -= step
+            if self.rotate:
+                self.image = pygame.transform.flip(self.image, False, False)
+                self.rotate_right = False
 
         if key[pygame.K_d]:
             self.rect.x += step
-
+            if not self.rotate:
+                self.image = pygame.transform.flip(self.image, True, False)
+                self.rotate_right = True
 
 class PlayerBullets:
     def __init__(self, x, y, mouse_x, mouse_y):
