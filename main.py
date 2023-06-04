@@ -18,8 +18,12 @@ root.fill((0, 0, 0))
 clock = pygame.time.Clock()
 FPS = 60
 
+
 player = Player(x=W/2, y=H/2, width=50, height=50, filename='player.png')
-game_map = Picture('map.png')
+game_map = Picture('map_big.png')
+
+camera_x = player.rect.x - W // 2
+camera_y = player.rect.x - H // 2
 
 fps_game = 0
 menu = 0
@@ -27,15 +31,13 @@ menu = 0
 player_bullets = []
 enemys = []
 enemys_gen = True
-enemys_count = 35
+enemys_count = 100
 
 bullet_count = 150
-bullet_delay = 0.3
+bullet_delay = 0.075
 bullet_time = time.time()
 
-# for i in range(enemys_count):
-#     enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3))
-#     enemys.append(enemy)
+all_sprites = []
 
 while True:
     root.fill((0, 0, 0))
@@ -61,6 +63,9 @@ while True:
             menu = 0
 
     if menu == 0:
+        game_map.rect.x, game_map.rect.y = 0, 0
+        all_sprites = [game_map]
+        player.init(all_sprites)
         enemys_gen = True
         enemys = []
         player_bullets = []
@@ -88,6 +93,7 @@ while True:
 
         elif game_settings.is_clicked():
             menu = 3
+            
 
     elif menu == 1:
         if len(enemys) == 0 and enemys_gen:
@@ -95,6 +101,7 @@ while True:
             for i in range(enemys_count):
                 enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3), 'russian_zombie.jpg')
                 enemys.append(enemy)
+                # all_sprites.append(enemy)
 
         game_map.draw()
         key = pygame.key.get_pressed()
@@ -117,10 +124,11 @@ while True:
             fps_show.set_text("FPS: " + str(clock.get_fps())[:4], 20, (255, 255, 255))
             fps_show.draw()
 
-        if pygame.mouse.get_pressed()[0] and bullet_count > 0:
+        if pygame.mouse.get_pressed()[0] and bullet_count > 0 and time.time() - bullet_time > bullet_delay:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             player_bullets.append(PlayerBullets(player.rect.x+25, player.rect.y+25, mouse_x, mouse_y))
             bullet_count -= 1
+            bullet_time = time.time()
 
         if key[pygame.K_r]:
             print(len(player_bullets))

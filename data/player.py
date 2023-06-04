@@ -5,30 +5,38 @@ import pygame
 
 from data.game_window import root
 from data.gui import Picture
+from data.enemy import Enemy
 
 pygame.init()
 
 class Player(Picture):
-    rotate = False
+    def init(self, sprites_list):
+        self.rotate_player = pygame.transform.flip(self.image, True, False)
+        self.orginal_player = self.image
+        self.sprites_list = sprites_list
 
     def move(self, key, step):
         if key[pygame.K_w]:
             self.rect.y -= step
+            for sprite in self.sprites_list:
+                sprite.rect.y += int(step*step)
 
         if key[pygame.K_s]:
             self.rect.y += step
+            for sprite in self.sprites_list:
+                sprite.rect.y -= int(step*step)
 
         if key[pygame.K_a]:
             self.rect.x -= step
-            if self.rotate:
-                self.image = pygame.transform.flip(self.image, False, False)
-                self.rotate_right = False
+            self.image = self.rotate_player
+            for sprite in self.sprites_list:
+                sprite.rect.x += int(step*step)
 
         if key[pygame.K_d]:
             self.rect.x += step
-            if not self.rotate:
-                self.image = pygame.transform.flip(self.image, True, False)
-                self.rotate_right = True
+            self.image = self.orginal_player
+            for sprite in self.sprites_list:
+                sprite.rect.x -= int(step*step)
 
 class PlayerBullets:
     def __init__(self, x, y, mouse_x, mouse_y):

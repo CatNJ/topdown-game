@@ -47,6 +47,3 @@ class Enemy(Picture):
 
             self.rect.x = self.x
             self.rect.y = self.y
-
-    def update_time(self):
-        self.start_time = time.time()
