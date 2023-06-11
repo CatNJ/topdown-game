@@ -1,4 +1,5 @@
 import time
+import math
 
 import pygame
 
@@ -8,11 +9,11 @@ from data.game_window import *
 
 pygame.init()
 
-# class Enemy(Area):
+# class Enemy_test(Area):
 #     def set_cord(self, x, y):
 #         self.x = x
 #         self.y = y
-#
+
 #     def move(self, player_x, player_y):
 #         self.speed = 1
 #         dx = player_x - self.x

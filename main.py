@@ -38,6 +38,8 @@ bullet_delay = 0.075
 bullet_time = time.time()
 
 all_sprites = []
+player_fixed_pos = (player.rect.x, player.rect.y)
+enemy_allow_move = True
 
 while True:
     root.fill((0, 0, 0))
@@ -101,15 +103,23 @@ while True:
             for i in range(enemys_count):
                 enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3), 'russian_zombie.jpg')
                 enemys.append(enemy)
-                # all_sprites.append(enemy)
+                all_sprites.append(enemy)
 
         game_map.draw()
         key = pygame.key.get_pressed()
         player.move(key, 6)
         player.draw()
 
+        if player_fixed_pos == (player.rect.x, player.rect.y):
+            enemy_allow_move = True
+
+        else:
+            player_fixed_pos = (player.rect.x, player.rect.y)
+            enemy_allow_move = False
+
         for enemy in enemys:
-            enemy.move()
+            if enemy_allow_move:
+                enemy.move()
             enemy.draw()
             for bullet in player_bullets:
                 if enemy.collidepoint((bullet.x, bullet.y)):
