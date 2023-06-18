@@ -19,8 +19,9 @@ clock = pygame.time.Clock()
 FPS = 60
 
 
-player = Player(x=W/2, y=H/2, width=50, height=50, filename='player.png')
-game_map = Picture('map_big.png')
+player = Player(x=W/2, y=H/2, width=35, height=64, filename='data/game_texture/player/pistol.png')
+player_skin = ['data/game_texture/player/pistol.png', 'data/game_texture/player/gun.png']
+
 
 camera_x = player.rect.x - W // 2
 camera_y = player.rect.x - H // 2
@@ -30,16 +31,23 @@ menu = 0
 
 player_bullets = []
 enemys = []
+map_blocks = []
 enemys_gen = True
 enemys_count = 100
 
+money = 0
 bullet_count = 150
-bullet_delay = 0.075
+bullet_delay = 0.2
 bullet_time = time.time()
 
 all_sprites = []
-player_fixed_pos = (player.rect.x, player.rect.y)
-enemy_allow_move = True
+
+bg = pygame.image.load('data/game_texture/bg.png')
+
+# for i in range(2):
+#     ii = i*1024
+#     for j in range(1):
+#         map_blocks.append(Picture('1024_map.png', x=1024*j, y=ii))
 
 while True:
     root.fill((0, 0, 0))
@@ -56,7 +64,7 @@ while True:
                 menu = 0
 
     if menu != 1:
-        main_text.draw()
+        main_lable.draw()
 
     if menu != 0 and menu != 1:
         back_button.draw(shift_x=5, shift_y=10)
@@ -66,7 +74,7 @@ while True:
 
     if menu == 0:
         game_map.rect.x, game_map.rect.y = 0, 0
-        all_sprites = [game_map]
+        all_sprites = []
         player.init(all_sprites)
         enemys_gen = True
         enemys = []
@@ -77,7 +85,7 @@ while True:
         player.rect.y = H/2
 
         root.fill((0, 0, 0))
-        main_text.draw()
+        main_lable.draw()
 
         buttons = [new_game, load_game, game_settings]
         for index, button in enumerate(buttons):
@@ -95,40 +103,48 @@ while True:
 
         elif game_settings.is_clicked():
             menu = 3
-            
+
 
     elif menu == 1:
+        root.blit(bg, (player.bg_x, player.bg_y))  # основний фон
+        root.blit(bg, (player.bg_x + 1224, player.bg_y))  # фон справа
+        root.blit(bg, (player.bg_x - 1224, player.bg_y))  # фон зліва
+        root.blit(bg, (player.bg_x, player.bg_y + 615))  # фон знизу
+        root.blit(bg, (player.bg_x, player.bg_y - 615))  # фон зверху
+        root.blit(bg, (player.bg_x - 1224, player.bg_y - 615))  # фон зверху зліва
+        root.blit(bg, (player.bg_x + 1224, player.bg_y + 615))  # фон знизу справа
+        root.blit(bg, (player.bg_x + 1224, player.bg_y - 615))  # фон зверху справа
+        root.blit(bg, (player.bg_x - 1224, player.bg_y + 615))  # фон знизу зліва
+
+
+
         if len(enemys) == 0 and enemys_gen:
             enemys_gen = False
             for i in range(enemys_count):
-                enemy = Enemy(r(50, W-50), r(50, H-50), 40, 40, (255, 0, 0), player, r(1, 3), 'russian_zombie.jpg')
+                enemy = Enemy(r(-500, W+500), r(-500, H+500), 35, 64, (255, 0, 0), player, 0.1, 'data/game_texture/zombie/zombie.png')
                 enemys.append(enemy)
                 all_sprites.append(enemy)
 
-        game_map.draw()
+        # game_map.draw()
         key = pygame.key.get_pressed()
-        player.move(key, 6)
+        player.move(key, 2)
         player.draw()
 
-        if player_fixed_pos == (player.rect.x, player.rect.y):
-            enemy_allow_move = True
-
-        else:
-            player_fixed_pos = (player.rect.x, player.rect.y)
-            enemy_allow_move = False
-
         for enemy in enemys:
-            if enemy_allow_move:
-                enemy.move()
+            enemy.move()
             enemy.draw()
             for bullet in player_bullets:
                 if enemy.collidepoint((bullet.x, bullet.y)):
                     if enemy in enemys:
                         player_bullets.remove(bullet)
                         enemys.remove(enemy)
+                        money += 2
 
         bullet_count_lable.set_text(f'bullet: {bullet_count}', 25, (255,255,255))
         bullet_count_lable.draw()
+
+        money_lable.set_text(f'money: {money}', 25)
+        money_lable.draw()
 
         if show_fps:
             fps_show.set_text("FPS: " + str(clock.get_fps())[:4], 20, (255, 255, 255))

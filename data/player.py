@@ -4,39 +4,69 @@ import math
 import pygame
 
 from data.game_window import root
+from data.game_map import *
 from data.gui import Picture
 from data.enemy import Enemy
 
+
 pygame.init()
+
+multiplicand = 2
 
 class Player(Picture):
     def init(self, sprites_list):
         self.rotate_player = pygame.transform.flip(self.image, True, False)
         self.orginal_player = self.image
         self.sprites_list = sprites_list
+        self.bg_x = 0
+        self.bg_y = 0
 
     def move(self, key, step):
         if key[pygame.K_w]:
-            self.rect.y -= step
-            for sprite in self.sprites_list:
-                sprite.rect.y += int(step*step)
+            if self.bg_y < 615:
+                self.bg_y += 5
+                self.rect.y -= step
+                for sprite in self.sprites_list:
+                    sprite.rect.y += int(step*multiplicand)
+                game_map.rect.y += int(step*multiplicand)
+
+            else:
+                pass
 
         if key[pygame.K_s]:
-            self.rect.y += step
-            for sprite in self.sprites_list:
-                sprite.rect.y -= int(step*step)
+            if self.bg_y > -525:
+                self.bg_y -= 5
+                self.rect.y += step
+                for sprite in self.sprites_list:
+                    sprite.rect.y -= int(step*multiplicand)
+                game_map.rect.y -= int(step*multiplicand)
+
+            else:
+                pass
 
         if key[pygame.K_a]:
-            self.rect.x -= step
-            self.image = self.rotate_player
-            for sprite in self.sprites_list:
-                sprite.rect.x += int(step*step)
+            if self.bg_x < 1224:
+                self.bg_x += 5
+                self.rect.x -= step
+                self.image = self.rotate_player
+                for sprite in self.sprites_list:
+                    sprite.rect.x += int(step*multiplicand)
+                game_map.rect.x += int(step*multiplicand)
+
+            else:
+                pass
 
         if key[pygame.K_d]:
-            self.rect.x += step
-            self.image = self.orginal_player
-            for sprite in self.sprites_list:
-                sprite.rect.x -= int(step*step)
+            if self.bg_x > -1150:
+                self.bg_x -= 5
+                self.rect.x += step
+                self.image = self.orginal_player
+                for sprite in self.sprites_list:
+                    sprite.rect.x -= int(step*multiplicand)
+                game_map.rect.x -= int(step*multiplicand)
+
+            else:
+                pass
 
 class PlayerBullets:
     def __init__(self, x, y, mouse_x, mouse_y):

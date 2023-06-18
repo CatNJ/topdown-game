@@ -30,21 +30,20 @@ class Enemy(Picture):
         self.speed = speed
         self.color = color
         self.color_bak = color
+        self.orginal_image = self.image
+        self.rotate_image = pygame.transform.flip(self.image, True, False)
 
-    def load_image(self, image_file):
-        self.image = image_file
 
     def move(self):
         if self.player is not None:
             player_x, player_y = self.player.rect.x, self.player.rect.y
-            if player_x > self.x:
-                self.x += self.speed
-            elif player_x < self.x:
-                self.x -= self.speed
-            if player_y > self.y:
-                self.y += self.speed
-            elif player_y < self.y:
-                self.y -= self.speed
-
-            self.rect.x = self.x
-            self.rect.y = self.y
+            if player_x > self.rect.x:
+                self.rect.x += self.speed
+                self.image = self.orginal_image
+            if player_x < self.rect.x:
+                self.rect.x -= self.speed
+                self.image = self.rotate_image
+            if player_y > self.rect.y:
+                self.rect.y += self.speed
+            if player_y < self.rect.y:
+                self.rect.y -= self.speed
