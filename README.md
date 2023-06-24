@@ -1,2 +1,2 @@
 # Zombie Rush
-Top-down shooter, kill russian Z-zombie
+Top-down shooter, kill Z-zombie
