@@ -3,11 +3,11 @@
 from data.gui import Button
 from data.settings import *
 
-new_game = Button(25, 425, 250, 50, (255, 255, 255))
+new_game = Button(25, 525, 250, 50, (255, 255, 255))
 new_game.set_text("New game", 25, (0, 0, 0))
 
-load_game = Button(25, 525, 250, 50, (255, 255, 255))
-load_game.set_text("Load game", 25, (0, 0, 0))
+# load_game = Button(25, 525, 250, 50, (255, 255, 255))
+# load_game.set_text("Load game", 25, (0, 0, 0))
 
 game_settings = Button(25, 625, 250, 50, (255, 255, 255))
 game_settings.set_text("Settings", 25, (0, 0, 0))

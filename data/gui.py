@@ -30,6 +30,7 @@ class Area():
         return self.rect.colliderect(rect)
 
 
+
 class Label(Area):
     def set_text(self, text='', font_size=12, text_color=(255, 255, 255)):
         font = pygame.font.SysFont('verdana', font_size)
@@ -53,6 +54,10 @@ class Picture(Area):
 
     def draw(self):
         root.blit(self.image, (self.rect.x, self.rect.y))
+
+    def is_clicked(self):
+        if self.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+            return True
 
 
 class Button(Label):

@@ -14,19 +14,23 @@ pygame.init()
 multiplicand = 2
 
 class Player(Picture):
-    def init(self, sprites_list):
+    def image_init(self):
         self.rotate_player = pygame.transform.flip(self.image, True, False)
         self.orginal_player = self.image
-        self.sprites_list = sprites_list
+
+    def init(self, health):
+        # self.rotate_player = pygame.transform.flip(self.image, True, False)
+        # self.orginal_player = self.image
+        self.health = health
         self.bg_x = 0
         self.bg_y = 0
 
-    def move(self, key, step):
+    def move(self, key, step, sprites_list):
         if key[pygame.K_w]:
             if self.bg_y < 615:
                 self.bg_y += 5
                 self.rect.y -= step
-                for sprite in self.sprites_list:
+                for sprite in sprites_list:
                     sprite.rect.y += int(step*multiplicand)
                 game_map.rect.y += int(step*multiplicand)
 
@@ -37,7 +41,7 @@ class Player(Picture):
             if self.bg_y > -525:
                 self.bg_y -= 5
                 self.rect.y += step
-                for sprite in self.sprites_list:
+                for sprite in sprites_list:
                     sprite.rect.y -= int(step*multiplicand)
                 game_map.rect.y -= int(step*multiplicand)
 
@@ -49,7 +53,7 @@ class Player(Picture):
                 self.bg_x += 5
                 self.rect.x -= step
                 self.image = self.rotate_player
-                for sprite in self.sprites_list:
+                for sprite in sprites_list:
                     sprite.rect.x += int(step*multiplicand)
                 game_map.rect.x += int(step*multiplicand)
 
@@ -61,7 +65,7 @@ class Player(Picture):
                 self.bg_x -= 5
                 self.rect.x += step
                 self.image = self.orginal_player
-                for sprite in self.sprites_list:
+                for sprite in sprites_list:
                     sprite.rect.x -= int(step*multiplicand)
                 game_map.rect.x -= int(step*multiplicand)
 
@@ -69,7 +73,7 @@ class Player(Picture):
                 pass
 
 class PlayerBullets:
-    def __init__(self, x, y, mouse_x, mouse_y):
+    def __init__(self, x, y, mouse_x, mouse_y, damage=50):
         self.x = x
         self.y = y
         self.mouse_x = mouse_x
@@ -78,6 +82,8 @@ class PlayerBullets:
         self.angle = math.atan2(y-mouse_y, x-mouse_x)
         self.x_vel = math.cos(self.angle) * self.speed
         self.y_vel = math.sin(self.angle) * self.speed
+
+        self.damage = damage
 
     def shoot(self):
         self.x -= int(self.x_vel)
