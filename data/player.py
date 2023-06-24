@@ -4,7 +4,6 @@ import math
 import pygame
 
 from data.game_window import root
-from data.game_map import *
 from data.gui import Picture
 from data.enemy import Enemy
 
@@ -32,10 +31,6 @@ class Player(Picture):
                 self.rect.y -= step
                 for sprite in sprites_list:
                     sprite.rect.y += int(step*multiplicand)
-                game_map.rect.y += int(step*multiplicand)
-
-            else:
-                pass
 
         if key[pygame.K_s]:
             if self.bg_y > -525:
@@ -43,10 +38,6 @@ class Player(Picture):
                 self.rect.y += step
                 for sprite in sprites_list:
                     sprite.rect.y -= int(step*multiplicand)
-                game_map.rect.y -= int(step*multiplicand)
-
-            else:
-                pass
 
         if key[pygame.K_a]:
             if self.bg_x < 1224:
@@ -55,10 +46,6 @@ class Player(Picture):
                 self.image = self.rotate_player
                 for sprite in sprites_list:
                     sprite.rect.x += int(step*multiplicand)
-                game_map.rect.x += int(step*multiplicand)
-
-            else:
-                pass
 
         if key[pygame.K_d]:
             if self.bg_x > -1150:
@@ -67,10 +54,7 @@ class Player(Picture):
                 self.image = self.orginal_player
                 for sprite in sprites_list:
                     sprite.rect.x -= int(step*multiplicand)
-                game_map.rect.x -= int(step*multiplicand)
 
-            else:
-                pass
 
 class PlayerBullets:
     def __init__(self, x, y, mouse_x, mouse_y, damage=50):

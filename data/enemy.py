@@ -9,20 +9,6 @@ from data.game_window import *
 
 pygame.init()
 
-# class Enemy_test(Area):
-#     def set_cord(self, x, y):
-#         self.x = x
-#         self.y = y
-
-#     def move(self, player_x, player_y):
-#         self.speed = 1
-#         dx = player_x - self.x
-#         dy = player_y - self.y
-#         distance = math.hypot(dx, dy)
-#         if distance != 0:
-#             self.rect.x += (dx / distance) * self.speed
-#             self.rect.y += (dy / distance) * self.speed
-
 class Enemy(Picture):
     def __init__(self, x=0, y=0, width=0, height=0, color=(255, 0, 0), player=None, health=100, speed=1, reward=1, filename=None, window=root):
         super().__init__(x=x, y=y, width=width, height=height, filename=filename)

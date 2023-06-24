@@ -1,6 +1,5 @@
 import pygame
 
-# імпорт вікна гри
 from data.game_window import root
 
 pygame.init()

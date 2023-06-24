@@ -54,11 +54,6 @@ all_sprites = []
 
 bg = pygame.image.load('data/game_texture/bg.png')
 
-# for i in range(2):
-#     ii = i*1024
-#     for j in range(1):
-#         map_blocks.append(Picture('1024_map.png', x=1024*j, y=ii))
-
 bullet_time = time.time()
 shop_time = time.time()
 select_time = time.time()
@@ -96,7 +91,6 @@ while True:
             menu = 0
 
     if menu == 0:
-        game_map.rect.x, game_map.rect.y = 0, 0
         shop.rect.x, shop.rect.y = W/2+150, H//2+150
         all_sprites = [shop]
         shop_price = [50, 500]
@@ -140,19 +134,15 @@ while True:
 
 
     elif menu == 1:
-        # if null_rect not in enemys:
-        #     enemys.append(null_rect)
-
-        root.blit(bg, (player.bg_x, player.bg_y))  # основний фон
-        root.blit(bg, (player.bg_x + 1224, player.bg_y))  # фон справа
-        root.blit(bg, (player.bg_x - 1224, player.bg_y))  # фон зліва
-        root.blit(bg, (player.bg_x, player.bg_y + 615))  # фон знизу
-        root.blit(bg, (player.bg_x, player.bg_y - 615))  # фон зверху
-        root.blit(bg, (player.bg_x - 1224, player.bg_y - 615))  # фон зверху зліва
-        root.blit(bg, (player.bg_x + 1224, player.bg_y + 615))  # фон знизу справа
-        root.blit(bg, (player.bg_x + 1224, player.bg_y - 615))  # фон зверху справа
-        root.blit(bg, (player.bg_x - 1224, player.bg_y + 615))  # фон знизу зліва
-
+        root.blit(bg, (player.bg_x, player.bg_y))
+        root.blit(bg, (player.bg_x + 1224, player.bg_y))
+        root.blit(bg, (player.bg_x - 1224, player.bg_y))
+        root.blit(bg, (player.bg_x, player.bg_y + 615))
+        root.blit(bg, (player.bg_x, player.bg_y - 615))
+        root.blit(bg, (player.bg_x - 1224, player.bg_y - 615))
+        root.blit(bg, (player.bg_x + 1224, player.bg_y + 615))
+        root.blit(bg, (player.bg_x + 1224, player.bg_y - 615))
+        root.blit(bg, (player.bg_x - 1224, player.bg_y + 615))
 
 
         if (null_rect in enemys or enemys_first_spawn) and time.time() - zombie_spawn_time > 3:
@@ -179,18 +169,11 @@ while True:
                 elif random_spawn == 5:
                     enemy = Enemy(x=r(-1224, 1224), y=r(-615, -475), width=35, height=64, player=player, health=enemys_health, speed=6, reward=50, filename='data/game_texture/zombie/zombie.png')
 
-                print(enemy.health)
-
                 enemys.append(enemy)
                 all_sprites.append(enemy)
 
 
         shop.draw()
-        # player.image = player_skins[player_select]
-        # player.orginal_player = player_skins[player_select]
-        # player.rotate_image = player_skins[player_select]
-
-        # game_map.draw()
         key = pygame.key.get_pressed()
         player.move(key, 2, all_sprites)
         player.draw()
@@ -241,9 +224,6 @@ while True:
             bullet_count -= 1
             bullet_time = time.time()
 
-        # if key[pygame.K_r]:
-        #     print(len(player_bullets))
-
         if key[pygame.K_UP] and time.time() - select_time > 0.1:
             select_time = time.time()
             player_select += 1
@@ -277,8 +257,6 @@ while True:
             player.orginal_player = player_skins[player_select]
             player.rotate_image = player_skins[player_select]
             player.image_init()
-
-        # print(player_select)
 
         for bullet in player_bullets:
             bullet.shoot()
@@ -333,8 +311,6 @@ while True:
         if player.health < 1:
             menu = 4
 
-        # print(len(enemys))
-
 
 
     elif menu == 3:
@@ -347,15 +323,15 @@ while True:
 
     # game over
     elif menu == 4:
-        root.blit(bg, (player.bg_x, player.bg_y))  # основний фон
-        root.blit(bg, (player.bg_x + 1224, player.bg_y))  # фон справа
-        root.blit(bg, (player.bg_x - 1224, player.bg_y))  # фон зліва
-        root.blit(bg, (player.bg_x, player.bg_y + 615))  # фон знизу
-        root.blit(bg, (player.bg_x, player.bg_y - 615))  # фон зверху
-        root.blit(bg, (player.bg_x - 1224, player.bg_y - 615))  # фон зверху зліва
-        root.blit(bg, (player.bg_x + 1224, player.bg_y + 615))  # фон знизу справа
-        root.blit(bg, (player.bg_x + 1224, player.bg_y - 615))  # фон зверху справа
-        root.blit(bg, (player.bg_x - 1224, player.bg_y + 615))  # фон знизу зліва
+        root.blit(bg, (player.bg_x, player.bg_y))
+        root.blit(bg, (player.bg_x + 1224, player.bg_y))
+        root.blit(bg, (player.bg_x - 1224, player.bg_y))
+        root.blit(bg, (player.bg_x, player.bg_y + 615))
+        root.blit(bg, (player.bg_x, player.bg_y - 615))
+        root.blit(bg, (player.bg_x - 1224, player.bg_y - 615))
+        root.blit(bg, (player.bg_x + 1224, player.bg_y + 615))
+        root.blit(bg, (player.bg_x + 1224, player.bg_y - 615))
+        root.blit(bg, (player.bg_x - 1224, player.bg_y + 615))
 
         player_health_label.set_text(f'Health: 0', 25)
         player.draw()
